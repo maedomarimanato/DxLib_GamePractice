@@ -132,7 +132,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="APPMain.cpp" />
+    <ClCompile Include="FreamContor_.cpp" />
+    <ClCompile Include="GameClearScene_.cpp" />
+    <ClCompile Include="GameMainScene_.cpp" />
+    <ClCompile Include="GameOverScene_.cpp" />
+    <ClCompile Include="inputControl_.cpp" />
+    <ClCompile Include="SceneManager_.cpp" />
     <ClCompile Include="ソース.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FreamControl.h" />
+    <ClInclude Include="FreamControl_.h" />
+    <ClInclude Include="GameClearScene_.h" />
+    <ClInclude Include="GameMainScene_.h" />
+    <ClInclude Include="GameOverScene_.h" />
+    <ClInclude Include="inputControl_.h" />
+    <ClInclude Include="SceneManager_.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
