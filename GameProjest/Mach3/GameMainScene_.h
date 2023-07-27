@@ -14,6 +14,6 @@
 *プロトコルタイプ宣言
 **************************/
 
-int Game MainScene_Initize(void);
+int Game MainScene_Initialize(void);
 void Game MainScene_Update(void);
 void Game MainScene_Draw(void);
