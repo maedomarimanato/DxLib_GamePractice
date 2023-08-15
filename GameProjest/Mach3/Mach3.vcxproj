@@ -139,6 +139,7 @@
     <ClCompile Include="inputControl_.cpp" />
     <ClCompile Include="SceneManager_.cpp" />
     <ClCompile Include="Stage_.cpp" />
+    <ClCompile Include="TitieScene_.cpp" />
     <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +150,8 @@
     <ClInclude Include="GameOverScene_.h" />
     <ClInclude Include="inputControl_.h" />
     <ClInclude Include="SceneManager_.h" />
+    <ClInclude Include="stage_.h" />
+    <ClInclude Include="TitleScene_.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -31,7 +31,7 @@
 *プログラムの開始
 *******************************************/
 int WINAPI WinMain(_In_HINSTANCE hInstance, _In_opt_HINSTANCE hPrevInstance,
-	_In_LPSTR lpCmdLine, _In_int nShowCmd)
+_In_LPSTR lpCmdLine, _In_int nShowCmd)
 {
 
 	//ウィンドウタイトル設定
@@ -43,14 +43,14 @@ int WINAPI WinMain(_In_HINSTANCE hInstance, _In_opt_HINSTANCE hPrevInstance,
 
 	//Dxライブラリ初期化処理
 	//エラーが発生したら、終了する
-	if (DxLib_Init() == D_ERROR)
+	if(DxLib_INit()==D_ERROR)
 	{
 		return D_ERROR;
 	}
 
 	//各機能の初期化処理
 	FreamControl_Initialize();    //フレームレート制御機能
-	Input_Initialize();　　^   　//入力制御機能
+	Input_Initialize();   //入力制御機能
 
 	
 	

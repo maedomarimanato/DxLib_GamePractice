@@ -444,6 +444,288 @@ void MoveBLock(void)
 *戻り値：なし
 **********************/
 
+void CheckBlock(void)
+{
+	int Result = 0;
+	int i, j;
+
+	//ブロック連鎖チェック
+	for (i = 1; i < HEIGHT - 1; i++)
+	{
+		for (j = 1; j < WIDTH - 1; j++)
+		{
+			Result += combo_check(i, j);
+		}
+	}
+	//連鎖がなくなればブロック選択へ
+	//そうでなければブロック移動へ移行して連鎖チェックを継続する
+	if (Result = 0)
+	{
+		//クリアチェック処理ヘ移行する。
+		Stage_State = 4;
+	}
+	else
+	{
+		//連鎖が3つ以上ならブロックを消しブロック移動処理平行する
+		Stage_State = 1;
+	}
+}
+
+/******************************
+*ステージ制御機能：クリア条件チェック処理
+*引数：なし
+*戻り値：なし
+*備考：クリア条件フラグを0とし、各スクールの削除ブロックが
+* 　　　　　レベルよりも数が少なかったら処理を中断してゲームを続行する。
+*******************************/
+
+void CheckClear(void)
+{
+	int i;
+	for (i = 0; i < ITEM_MAX; i++)
+	{
+		if (Item[i] >= Stage_Mission)
+		{
+			ClearFlag = TRUE;
+			break;
+		}
+	}
+	if (ClearFlag != TRUE)
+	{
+		Stage_State = 0;
+	}
+}
+
+/*****************************
+*ステージ制御機能：処理ステージステータス情報取得処理
+*引数：なし
+*戻り値：ステージのステータス情報
+*****************************/
+
+int Get_StageState(void)
+{
+	return Stage_State;
+}
+
+/**************************
+*ステージ制御機能：ミッション情報取得処理
+*引数：なし
+*戻り値：ミッションがクリアしているか
+**************************/
+
+int Get_StageClearFlag(void)
+{
+	return ClearFlag;
+}
+
+/*************************
+*ステージ制御機能：ミッション情報取得処理
+*引数：なし
+*戻り値：ミッションがクリアしているか
+*************************/
+
+int Get_SrageScore(void)
+{
+	return Stage_Score;
+}
+
+/*************************
+*ステージ制御機能：ミッション情報取得処理
+*引数：次ミッションに必要な数値
+*戻り値：なし
+**************************/
+
+void Set_StageMission(int mission)
+{
+	Stage_Mission += mission;
+}
+
+/***************************
+*ステージ制御機能：連鎖チェック処理
+*引数1：ブロックYマス
+*引数2：ブロックXマス
+*戻り値：連鎖有限（0：無し　1：有り）
+***************************/
+
+int combo_check(int y, int x)
+{
+	int ret = FALSE;
+
+	//縦方向のチェック
+	int CountH = 0;
+	int ColorH = 0;
+	save_block();
+	combo_check_h(y, x, &CountH, &ColorH);
+	if (CountH < 3)
+	{
+		restore_block();   //３個未満なら戻す
+	}
+
+	//横方向のチェック
+	int CountW = 0;
+	int ColorW = 0;
+	save_block();
+	combo_check_w(y, x, &CountW, &ColorW);
+	if (CountW < 3)
+	{
+		restore_block();
+	}
+
+	//３つ以上並んでいるか？
+	if ((CountH >= 3llCountW >= 3))
+	{
+		if (CountH >= 3)
+		{
+			Item[Color - 1] += CountH;
+			Stage_Score += CountH * 10;
+		}
+		if (CountW >= 3)
+		{
+			Item[ColorW - 1] += CountW;
+			Stage_Scolre += CountW * 10;
+		}
+		ret = TRUE;
+	}
+	return ret;
+}
+
+/************************
+*ステージ制御機能：連鎖チェック処理（縦方向）
+*引数：なし
+*戻り値：連鎖有無（0：無し　1：有り）
+*************************/
+
+void combo_check_h(int y, int x, int* cnt, int* col)
+{
+	int Color = 0;
+	//対象のブロックが対象の場合はreturnで処理を抜ける
+
+	if (Block[y][x].image == 0)
+	{
+		return;
+	}
+	*col = Block[y][x].image;
+	color = Block[y][x].image;
+	Block[y][x].image = 0;
+	(*cnt)++;
+
+	if (Block[y + 1][x].image == Color)
+	{
+		combo_check_h(y + 1, x, cnt, col);
+	}
+	if (Block[y - 1][x].image == Color)
+	{
+		combo_check_h(y - 1, x, cnt, col);
+	}
+}
+/***********************
+*ステージ制御機能：連鎖チェック処理（横方向）
+*引数：なし
+*戻り値：連鎖有無（0：無し　1：有り）
+***********************/
+
+void combo_check_w(int y, intx, int* cnt, int* col)
+{
+	int Color = 0;
+	//対象ブロックが枠外の場合returnで処理を抜ける
+	if (Block[y][x].image == 0)
+	{
+		return
+	}
+
+	*col = Block[y][x].image;
+	Color = Block[y][x].image;  //色取得
+	Block[y][x].image = 0;
+	(*cnt)++;
+
+	if (Block[y + 1][x].imsge == Color)
+	{
+		combo_check_h(y - 1, x, cnt, col);
+	}
+	if (Block[y - 1[x].image == Color])
+	{
+		combo_check_h(y - 1, x, cnt, col);
+	}
+}
+/***********************
+*ステージ制御機能：連鎖チェック処理（横方向）
+*引数：なし
+*戻り値：連鎖有無（0:無し  1有り）
+***********************/
+
+void combo_check_w(int y, int x, int* cnt, int* col)
+{
+	int Color = 0;
+	//対象ブロックが外枠の場合teturnで処理を抜ける
+
+	if (Block[y][x].image == 0)
+	{
+		return;
+	}
+
+
+	*col = Block[y][x].image;
+	Color = Block[y][x].image;  //色取得
+	Block[y][x].image = 0;
+	(*cnt)++;
+
+	if (Block[y][x + 1].image == Color)
+	{
+		combo_check_w(y, x + 1, cnt, col);
+	}
+	if (Block[y][x - 1].image == Color)
+	{
+		combo_check_w(y, x - 1, cnt, col);
+	}
+}
+
+/*************************
+*ステージ制御機能：ブロック情報の保存処理処理
+*引数：なし
+*戻り値：なし
+**************************/
+
+void sava_block(void)
+{
+	int i, j;
+	for (i = 0; i < HEIGHT; i++)
+	{
+		for (j = 0; j < WIDTH; j++)
+		{
+			Block[i][j].backup = Block[i][j].image;
+		}
+	}
+}
+
+/********************
+*ステージ制御機能：ブロック情報を戻す処理
+*引数：なし
+*戻り値：なし
+*********************/
+
+void restore_block(void)
+{
+	int i, j;
+
+	for (i = 0; i < HEIGHT; i++)
+	{
+		Block[i][j].image = Block[i][j].backup;
+	}
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+		 
+
 	
 
 
