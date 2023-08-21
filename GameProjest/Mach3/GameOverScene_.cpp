@@ -1,6 +1,6 @@
 #include "GameOverScene.h"
-#include  "DxLib.h"
-#include "SceneMangger.h"
+#include "DxLib.h"
+#include "SceneManager.h"
 
 /**************************
 *変数定義
@@ -66,14 +66,15 @@ void GameOverScene_Update(void)
 			PlaySoundMem(GameOverSE, DX_PLAYTYPE_BACK);
 			GameOverFlag = TRUE;
 		}
+
 	}
+}
 
 	/**************************
 	*ゲームオーバー画面：描画処理
 	*引数：なし
 	*戻り値：なし
 	**************************/
-
 	void GameOverScene_Draw(void)
 	{
 		//ゲームオーバー画像表示

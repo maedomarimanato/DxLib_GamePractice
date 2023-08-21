@@ -1,15 +1,15 @@
 #include "GameMainScene.h"
 #include "DxLib.h"
 #include "Stage.h"
-#include "SceneMangger.h"
+#include "SceneManager.h"
 
 
 /***************************
 *マクロ定義
 ***************************/
 
-#define TIMELIMIT         (3600*3)//制限時間 
-#define NUMBER_IMAGE_MAX (10)　//数字画像数
+#define TIMELIMIT			(3600*3)//制限時間 
+#define NUMBER_IMAGE_MAX	(10)	//数字画像数
 
 /***************************
 * 型定義
@@ -45,7 +45,7 @@ int GameMainScene_Initialize(void)
 
 	//画像読み込み
 	LoadDivGraph("images/number.png", NUMBER_IMAGE_MAX,
-NUMBER_IMAGE_MAX, 1, 60, 120, NumberImage);
+		NUMBER_IMAGE_MAX, 1, 60, 120, NumberImage);
 
 	//ステージ機能初期化
 	ret = StageInitialize();
@@ -63,20 +63,20 @@ NUMBER_IMAGE_MAX, 1, 60, 120, NumberImage);
 	//ゲームプレイが初回かどうか？
 	if (GameCount == 0)
 	{
-		GameScore = 0;//スコアの初期化
-		GameLevel = 1;//ゲームレベルの初期化
-		Set_StageMission (3);   //ミッションの初期化
-		GameCount++;  //次回の設定
-	｝
+		GameScore = 0;           //スコアの初期化
+		GameLevel = 1;          //ゲームレベルの初期化
+		Set_StageMission(3);   //ミッションの初期化
+		GameCount++;          //次回の設定
+	}
 	else
 	{
-		GameLevel++;    //ゲームレベルの更新
-		Set_StageMission(3);//ミッションを増やす
+		GameLevel++;               //ゲームレベルの更新
+		Set_StageMission(3);      //ミッションを増やす
 	}
 	GameTime = TIMELIMIT;  //制限時間の初期化
 
 	return ret;
-	}
+}
 
 	/*****************************
 	*ゲームメイン画面：更新処理
@@ -85,23 +85,22 @@ NUMBER_IMAGE_MAX, 1, 60, 120, NumberImage);
 	*****************************/
 
 	void GameMainScene_Update(void)
-
 	{
-		switch (Get_StageState())
+		switch(Get_StageState())
 		{
-			case 0;
+		     case 0:
 				SelectBlock();  //ブロックを選択する
 				break;
-				case2;
+			 case 2:
 				MoveBlock(); //ブロックを移動させる。
-				break +
-					case3;
+				break;
+		     case3:
 				CheckBlock();  //ブロックの確認
 				break;
-				case4;
+			 case4:
 				CheckClear();    //クリアチェック
 				break;
-				default;
+			 default:
 				break;
 		}
 
@@ -114,9 +113,9 @@ NUMBER_IMAGE_MAX, 1, 60, 120, NumberImage);
 			Change_Scene(E_GAME_OVER);
 		}
 		//ミッションを達成したら、ゲームクリアにする。
-		if (Get_StageClearflag())
+		if (Get_StageClearFlag())
 		{
-			Chang_Scene(E_GAME_CLEAR);
+			Change_Scene(E_GAME_CLEAR);
 		}
 
 	}
@@ -153,8 +152,8 @@ NUMBER_IMAGE_MAX, 1, 60, 120, NumberImage);
 		//スコアの描画
 		PosX = 620;
 		do {
-			DrawRotaGraph(PosX, 160, 0.3f, 0, NumderImage[tmp_score % 10],
-				TRUE);
+			DrawRotaGraph(PosX, 160, 0.3f, 0, NumberImage[tmp_score % 10],
+	TRUE);
 			tmp_score /= 10;
 			PosX -= 20;
 		} while (tmp_score > 0);

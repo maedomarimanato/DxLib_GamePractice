@@ -21,7 +21,7 @@ void MoveBlock(void);
 void CheckBlock(void);
 void CheckClear(void);
 
-int Get_StageStste(void);
+int Get_StageState(void);
 int Get_StageClearFlag(void);
 int Get_StageScore(void);
 

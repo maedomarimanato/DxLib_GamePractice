@@ -1,4 +1,4 @@
-#include "TitiScene.h"
+#include "TitlScene.h"
 #include "DxLib.h"
 #include "InputControl.h"
 #include "SceneManager.h"
@@ -59,10 +59,12 @@ void TitleScene_update(void)
 	//	ƒ^ƒCƒgƒ‹BGM
 	if (CheckSoundMem(TitleBGM) == 0)
 	{
-		playSoundMem(TitleBGM, DX_PLAYTYPE_BACK);
+		PlaySoundMem(TitleBGM, DX_PLAYTYPE_BACK);
 	}
 
-	if (GetMousePositionX() > 120 && GetMousePositionX()290 &&
+	if(GetKeyFlg(MOUSE_INPUT_LEFT)==TRUE)
+    {
+	if (GetMousePositionX() > 120 && GetMousePositionX()_<290 &&
 		GetMousePosition() > 260 && GetMousePositionY() < 315)
 	{
 		Change_Scene(E_GAMEMAIN);

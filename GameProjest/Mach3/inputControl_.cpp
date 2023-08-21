@@ -25,7 +25,7 @@ void Input_Initialize(void)
 	old_button = NULL;
 	now_button = NULL;
 	mouse_position_x = NULL;
-	mouse_postiton_y = NULL;
+	mouse_position_y = NULL;
 }
 /**************************
 *入力制御機能：更新処理
@@ -36,11 +36,11 @@ void Input_Initialize(void)
 void Input_Update(void)
 {
 	//マウス入力情報の取得
-	oid_button = now_button;
+	old_button = now_button;
 	now_button = GetMouseInput();
 
 	//マウスカーソル座標の取得
-	GetMousePoint(&mouse_position_y);
+	GetMousePoint(&mouse_position_x,&mouse_position_y);
 }
 
 /**************************
@@ -112,10 +112,11 @@ int GetNowkey(int key)
 		ret = TRUE;
 	}
 
-	ret = TRUE;
+	return ret;
 }
-return ret;
-}
+  
+	
+
 
 /*************************
 *入力制御機能：入力情報取得処理（押した瞬間）
@@ -126,13 +127,14 @@ return ret;
 int GrtKEYFlg(int key)
 {
 	int ret = FALSE;
-	int keyflg = now_button & ～old_botton;
+	int keyflg = now_button &~old_button;
 
 
 	if ((key & keyflg) != FALSE)
 	{
-		ret = TRUE
+		ret = TRUE;
 	}
+	
 	return ret;
 }
 

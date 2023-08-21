@@ -1,25 +1,33 @@
-#include"SceneManager.h"
-#include"TitiScene.h"
-#include"GameMainScene.h"
+#include "SceneManager.h"
+#include "TitleScene.h"
+#include "GameMainScene.h"
 #include"GameClearScene"
 #include"GameOverScene.h"
+
 
 /***************************
 *マクロ定義
 ****************************/
 
-GAME_MODE Game_Mode;
-GAME_MODE Next_Mode;
-
 /***************************
-*プロトタイプ宣言
+*型宣言
 ***************************/
 
 /**************************
-*シーン管理機能：初期化処理
+変数宣言
+**************************/
+GAME_MODE Game_Mode;        //ゲームモード情報（現在）
+GAME_MODE Next_Mode;        //ゲームモード情報（次）
+
+/*************************
+*プロトタイプ宣言
+*************************/
+
+/******************************
+*シーン管理機能
 *引数：ゲームモード情報
 *戻り値：なし
-**************************/
+******************************/
 
 int SceneManager_Initialize(GAME_MODE mode)
 {
@@ -27,57 +35,44 @@ int SceneManager_Initialize(GAME_MODE mode)
 
 	//シーン読み込み処理
 	//タイトル画面
-
-	Read_Error = TitieScene_Initialize();
+	Read_Error = TitleScene_Initialize();
 	if (Read_Error == D_ERROR)
 	{
 		return D_ERROR;
 	}
 
-	//ゲームメイン画面
+	//ゲームメイン画面 
 	Read_Error = GameMainScene_Initialize();
-	if (read_Error == D_ERROR)
+	if (Read_Error == D_ERROR)
 	{
 		return D_ERROR;
 	}
 
 	//ゲームクリア画面
 	Read_Error = GameClearScene_Initialize();
-	if (read_Error == D_ERROR)
+	if (Read_Error == D_ERROR)
 	{
 		return D_ERROR;
 	}
 
-	//ゲームクリア画面
+	//ゲームオーバー画面
 	Read_Error = GameOverScene_Initialize();
 	if (Read_Error == D_ERROR)
 	{
-		return D_ERROR
+		return D_ERROR;
 	}
 
 	Game_Mode = mode;
 	Next_Mode = Game_Mode;
 
-	return Read_Error
-}
-
-//ゲームオーバー画面
-Read_Error = GameOverScene_Initialize();
-if (Read_Error == D_ERROR)
-{
-	return D_ERROR;
-}
-
-Game_Mode = mode;
-Nextde = Game_Mode;
+	return Read_Error;
 }
 
 /******************************
-*シーン管理機能
-*引数：なし
-*戻り値：なし
+*シーン管理機能:更新処理
+* 引数：なし
+* 戻り値：なし
 ******************************/
-
 void SceneManager_Update(void)
 {
 	//前フレームとゲームモードが違っていたらシーンを切り替える
@@ -91,7 +86,7 @@ void SceneManager_Update(void)
 	switch (Game_Mode)
 	{
 	case E_TITLE:
-		TitieScene_Update();
+		TitleScene_Update();
 		break;
 	case E_GAMEMAIN:
 		GameMainScene_Update();
@@ -99,24 +94,24 @@ void SceneManager_Update(void)
 	case E_GAME_CLEAR:
 		GameOverScene_Update();
 		break;
-		default;
+	default:
 		break;
 	}
 }
 
-/******************************
-*シーン管理機能：描画処理
+/*****************************
+*シーン管理機能:描画処理
 *引数：なし
 *戻り値：なし
 ******************************/
 
-void SceneManager_Draw(void)
+void Change_Scene(GAME_MODE mode)
 {
 	//各画面の描画処理
 	switch (Game_Mode)
 	{
 	case E_TITLE:
-		TitieScene_Draw();
+		TitleScene_Draw();
 		break;
 	case E_GAMEMAIN:
 		GameMainScene_Draw();
@@ -127,16 +122,17 @@ void SceneManager_Draw(void)
 	case E_GAME_OVER:
 		GameOverScene_Draw();
 		break;
-	dafault:
+	default:
 		break;
 	}
 }
 
-/******************************
+/***********************
 *シーン管理機能：シーン切替処理
 *引数：変更するゲームモード
 *戻り値：なし
-******************************/
+************************/
+
 void Change_Scene(GAME_MODE mode)
 {
 	Next_Mode = mode;
