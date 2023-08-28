@@ -9,7 +9,7 @@
 ***************************/
 
 #define TIMELIMIT			(3600*3)//制限時間 
-#define NUMBER_IMAGE_MAX	(10)	//数字画像数
+#define NUMBER_IMAGE_MAX  (10)	//数字画像数
 
 /***************************
 * 型定義
@@ -94,13 +94,13 @@ int GameMainScene_Initialize(void)
 			 case 2:
 				MoveBlock(); //ブロックを移動させる。
 				break;
-		     case3:
+		     case 3:
 				CheckBlock();  //ブロックの確認
 				break;
-			 case4:
+			 case 4:
 				CheckClear();    //クリアチェック
 				break;
-			 default:
+			default:
 				break;
 		}
 
@@ -108,7 +108,7 @@ int GameMainScene_Initialize(void)
 		GameTime--;
 
 		//制限時間がなくなったら、ゲームオーバーにする
-		if (GameTime < 0)
+		if (GameTime<0)
 		{
 			Change_Scene(E_GAME_OVER);
 		}
@@ -126,10 +126,9 @@ int GameMainScene_Initialize(void)
 	*戻り値：なし
 	********************************/
 	
-
 	void GameMainScene_Draw(void)
 	{
-		int posx = 600;
+		int PosX = 600;
 		int tmp_level = GameLevel;
 		int tmp_score = Get_StageScore();
 
@@ -144,7 +143,7 @@ int GameMainScene_Initialize(void)
 
 		//レベルを描画
 		do {
-			DrawRotaGraph(PosX, 80, 0.5f, 0, NumberImage[tmp_level % 10], TRUE);
+			DrawRotaGraph(PosX, 80, 0.5f, 0, NumberImage[tmp_level %10], TRUE);
 			tmp_level /= 10;
 			PosX -= 30;
 		} while (tmp_level > 0);

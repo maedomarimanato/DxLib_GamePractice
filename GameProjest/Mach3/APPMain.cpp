@@ -30,8 +30,9 @@
 /*******************************************
 *プログラムの開始
 *******************************************/
-int WINAPI WinMain(_In_HINSTANCE hInstance, _In_opt_HINSTANCE hPrevInstance,
-_In_LPSTR lpCmdLine, _In_int nShowCmd)
+
+int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_
+	LPSTR lpCmdLine, _In_ int nshowCmd) 
 {
 
 	//ウィンドウタイトル設定
@@ -43,7 +44,7 @@ _In_LPSTR lpCmdLine, _In_int nShowCmd)
 
 	//Dxライブラリ初期化処理
 	//エラーが発生したら、終了する
-	if(DxLib_INit()==D_ERROR)
+	if(DxLib_Init()==D_ERROR)
 	{
 		return D_ERROR;
 	}
@@ -58,7 +59,7 @@ _In_LPSTR lpCmdLine, _In_int nShowCmd)
 
 	//シーンマネージャー初期化処理
 	//エラーが発生したら終了する
-	if (SceneMangger_Initialize(E_TITLE) == D_ERROR)
+	if (SceneManager_Initialize(E_TITLE) == D_ERROR)
 	{
 		return D_ERROR;
 	}
@@ -94,7 +95,7 @@ _In_LPSTR lpCmdLine, _In_int nShowCmd)
 	//Dxライブラリ使用の終了処理
 	DxLib_End();
 
-	return0;
+	return 0;
 }
 
 

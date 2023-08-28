@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 #include "GameMainScene.h"
-#include"GameClearScene"
+#include"GameClearScene.h"
 #include"GameOverScene.h"
 
 
@@ -24,7 +24,7 @@ GAME_MODE Next_Mode;        //ゲームモード情報（次）
 *************************/
 
 /******************************
-*シーン管理機能
+*シーン管理機能:初期化処理
 *引数：ゲームモード情報
 *戻り値：なし
 ******************************/
@@ -92,6 +92,9 @@ void SceneManager_Update(void)
 		GameMainScene_Update();
 		break;
 	case E_GAME_CLEAR:
+		GameClearScene_Update();
+		break;
+	case E_GAME_OVER:
 		GameOverScene_Update();
 		break;
 	default:
@@ -105,7 +108,7 @@ void SceneManager_Update(void)
 *戻り値：なし
 ******************************/
 
-void Change_Scene(GAME_MODE mode)
+void SceneManager_Draw(void)
 {
 	//各画面の描画処理
 	switch (Game_Mode)

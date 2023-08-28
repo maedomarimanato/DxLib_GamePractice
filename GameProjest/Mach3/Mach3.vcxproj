@@ -34,7 +34,7 @@
     <ClCompile Include="GameClearScene_.cpp" />
     <ClCompile Include="GameMainScene_.cpp" />
     <ClCompile Include="GameOverScene_.cpp" />
-    <ClCompile Include="inputControl_.cpp" />
+    <ClCompile Include="InputControl_.cpp" />
     <ClCompile Include="SceneManager_.cpp" />
     <ClCompile Include="Stage_.cpp" />
     <ClCompile Include="TitleScene_.cpp" />
