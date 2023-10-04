@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="APPMain.cpp" />
+    <ClCompile Include="Block_.cpp" />
     <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
