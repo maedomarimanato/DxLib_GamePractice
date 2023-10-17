@@ -137,6 +137,7 @@
     <ClCompile Include="FreamControl_.cpp" />
     <ClCompile Include="GameMainScene_.cpp" />
     <ClCompile Include="InputControl_.cpp" />
+    <ClCompile Include="RankingScene_.cpp" />
     <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +145,8 @@
     <ClInclude Include="EndScene.h" />
     <ClInclude Include="FreamControl.h" />
     <ClInclude Include="GameMainScene.h" />
+    <ClInclude Include="InputControl.h" />
+    <ClInclude Include="RankingScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
