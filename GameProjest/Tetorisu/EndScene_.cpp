@@ -1,5 +1,5 @@
 #include"EndScene.h"
-#include"DXLib.h"
+#include"DxLib.h"
 
 /****************
 *ƒ}ƒNƒ’è‹`

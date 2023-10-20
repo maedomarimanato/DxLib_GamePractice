@@ -1,4 +1,4 @@
-#include"INputControl.h"
+#include"InputControl.h"
 #include"DxLib.h"
 
 /**********************
@@ -41,7 +41,7 @@ void InputControl_Initialize(void)
 	int i; //ループカウンタ
 
 	//入力状態の初期化
-	for (i = 0; i < XINPUT BUTON_MAX; i++)
+	for (i = 0; i < XINPUT_BUTTON_MAX; i++)
 	{
 		button_state[i] = E_NONE;
 	}
