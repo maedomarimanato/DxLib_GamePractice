@@ -64,7 +64,7 @@ void Endscene_Draw(void)
 ******************************/
 
 int Get_EndTime(void)
-[
+{
 	if(wait_count > 300)
 	{
 		return TRUE;

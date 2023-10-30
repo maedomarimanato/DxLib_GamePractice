@@ -46,7 +46,7 @@ int name_num;
 void file_read(void);//ファイル読み込み
 void file_write(void);//ファイル書き込み
 void ranking_sort(void);//ランキングソート処理
-void rabking_input_name(void);//名前入力処理
+void ranking_input_name(void);//名前入力処理
 void ranking_input_name_draw(void); //名前入力描画処理
 
 /************************
@@ -59,7 +59,7 @@ int rankingScene_Initialize(void)
 {
 	int ret = 0;
 
-	file read();
+	file_read();
 
 	switch (DispMode)
 	{
@@ -134,6 +134,8 @@ void RankingScene_Draw(void)
 	{
 		DispMode = mode;
 	}
+	
+	
 
 	/****************************
 	*ランキング画面：スコア取得処理
@@ -176,7 +178,7 @@ void RankingScene_Draw(void)
 
 				fclose(fp);
 			}
-	}
+
 
 	/**************************************
 	*ランキング画面：ファイル書き込み処理
@@ -189,7 +191,12 @@ void RankingScene_Draw(void)
 		FILE* fp = NULL;
 		int i;
 
-		outputDebugString("ファイルを書き込みません");
+		OutputDebugString("フアイルを書き込みます");
+		fopen_s(&fp, RANKING_FILE, "w");
+
+		if(fp==NULL)
+		{
+		OutputDebugString("ファイルを書き込みません");
 	}
 	else
 	{
@@ -199,7 +206,7 @@ void RankingScene_Draw(void)
 				Ranking_Date[i].name, Ranking_date[i].score);
 		}
 
-		fclose(fp)
+		fclose(fp);
 			}
 }
 
@@ -215,14 +222,14 @@ void ranking_sort(void)
 	T_RANKING tmp; //退避領域
 
 	//一番下のスコアを更新する
-	Ranking_Date[RANKING_MAX - 1] = New_score;
+	Ranking_Date[RANKING_MAX - 1] = New_Score;
 
 	//データのソートを行う
 	for (i = 0; i < RANKING_MAX; i++)
 	{
 		for (j = i + 1; j < RANKING_MAX; j++)
 		{
-			if (Ranking_Date[i].score < Ranking_Date[j].score)
+			if (Ranking_Date[i].score< Ranking_Date[j].score)
 			{
 				tmp = Ranking_Date[i];
 				Ranking_Date[i] = Ranking_Date[j];
@@ -342,12 +349,12 @@ void ranking_input_name_draw(void)
 		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 530, GetColor(255, 255,
 			255), "%-3c", '0' + i);
 	}
-	DrawFormatStringString(300, 220, GetColor(255, 255, 255), ">%s", New_Score.name);
+	DrawFormatString(300, 220, GetColor(255, 255, 255), ">%s", New_Score.name);
 
 	SetFontSize(20);
 
 	//選択している文字をファーカスしている
-	DrawBox((Curosor.x * 50) + 290, (Cursor.y * 50) + 330,
+	DrawBox((Cursor.x * 50) + 290, (Cursor.y * 50) + 330,
 		(Cursor.x * 50) + 290, (Cursor.y * 50) + 370,
 		GetColor(255, 255, 255), FALSE);
 }

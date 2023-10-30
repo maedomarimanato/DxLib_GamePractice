@@ -70,7 +70,6 @@ void SceneManager_Initialize(GAME_MODE mode)
 	*引数：なし
 	*戻り値：なし
 	*******************************/
-
 	void SceneManager_Update(void)
 	{
 		//前フレームとゲームモードが違っていたらシーンを切り替える
@@ -87,16 +86,15 @@ void SceneManager_Initialize(GAME_MODE mode)
 			break;
 		case E_GAMEMAIN:
 			GameMainScene_Update();
-			break;
 		case E_RANKING:
-			RankingScene_Update();
+			rankingScene_Update();
 			break;
 		case E_END:
 		default:
 			EndScene_Update();
 			break;
 		}
-	}
+
 
   /******************************
   *シーン管理機能：描画処理
@@ -131,7 +129,7 @@ void SceneManager_Initialize(GAME_MODE mode)
 	*戻り値：なし
 	***********************************/
 
-	void Chage_Scene(GAMEE_MODE mode)
+	void Chage_Scene(GAME_MODE mode)
 	{
 		next_mode = mode;
 	}

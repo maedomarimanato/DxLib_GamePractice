@@ -34,10 +34,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	LPSTR lpCmdLine, _In_ int nshowCmd)
 {
 	//タイトルを変更
-	SetMainWindowText("テトリス")
+	SetMainWindowText("テトリス");
 
-	//ウィンドウモードで起動
-	ChangeWindowMode(TRUE);
+		//ウィンドウモードで起動
+		ChangeWindowMode(TRUE);
 
 	//ウィンドウサイズの決定
 	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_COLORBIT);
@@ -50,13 +50,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	}
 
 	//フレーム制御機能初期化処理
-	FreamControI_InitiaIize();
+	FreamControl_Initialize();
 
 	//シーン管理機能初期化処理
-	SceneManager_InitiaIize(E_TITLE);
+	SceneManager_Initialize(E_TITLE);
 
 	//入力制御機能初期化処理
-	InputControI_InitiaIize();
+	InputControl_Initialize();
 
 	//描画先画面を裏にする
 	SetDrawScreen(DX_SCREEN_BACK);
@@ -69,10 +69,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		D_NORMALITY)
 	{
 		//フレーム制御機能更新処理
-		FreamControI_Uqdte();
+		FreamControl_Update();
 
 		//画面の初期化
-		CIearDrawScreen();
+		ClearDrawScreen();
 
 		//入力制御機能更新処理
 		InputControl_Update();
@@ -84,7 +84,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		SceneManager_Draw();
 
 		//裏画面の内容を表画面に反映
-		ScreenFIip();
+		ScreenFlip();
 	}
 
 	//Dxライブラリ使用の終了処理

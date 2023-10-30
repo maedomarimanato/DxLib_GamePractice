@@ -13,7 +13,7 @@
 
 enum
 {
-	E_TITLE_BGM, ret
+	E_TITLE_BGM,
 	E_TITLE_SE_CURSOR,
 	E_TITLE_SE_SELECT,
 	E_SOUND_MAX
@@ -36,16 +36,16 @@ int TitleScene_Initialoize(void)
 {
 	int ret = 0;
 
-	cursor_numder = 0;
+	cursor_number = 0;
 
 	sounds[E_TITLE_BGM] = LoadSoundMem("sounds/BGM041.ogg");
 	sounds[E_TITLE_SE_CURSOR] = LoadSoundMem("sounds/SE1.mp3");
 	sounds[E_TITLE_SE_SELECT] = LoadSoundMem("sounds/SE2.mp3");
 
-	ChangVolumeSondMem(120, sounds[E_TITLE_SE_CURSOR]);
-	ChangVolumeSondMem(80, sounds[E_TITLE_SE_SELECT]);
+	ChangeVolumeSoundMem(120, sounds[E_TITLE_SE_CURSOR]);
+	ChangeVolumeSoundMem(80, sounds[E_TITLE_SE_SELECT]);
 
-	for (int i = ; i < E_SOUND_MAX; i++)
+	for (int i = 0; i < E_SOUND_MAX; i++)
 	{
 		if (sounds[i] == -1)
 		{
@@ -77,10 +77,10 @@ void TitleScene_Update(void)
 		switch (cursor_number)
 		{
 		case 0:
-			Chanager_Scene(E_GAMEMAIN);
+			Change_Scene(E_GAMEMAIN);
 			break;
 		case 1:
-			Chanage_Scene(E_RANKING);
+			Change_Scene(E_RANKING);
 			break;
 		case 2:
 		default:
@@ -102,18 +102,19 @@ void TitleScene_Update(void)
 	}
 	if (GetButton(XINPUT_BUTTON_DPAD_DOWN) == TRUE)
 	{
-		PlaySoundUp(XINPUT_BUTTON_DPAD_DOWN) == TRUE)
+		PlaySoundMem(sounds[E_TITLE_SE_CURSOR], DX_PLAYTYPE_NORMAL, FALSE);
+		if (cursor_number >= 2)
 		{
-			if (cursor_number >= 2)
-			{
-				cursor_number = 2;
-			}
-			else
-			{
-				cursor_number++;
-			}
-			}
+			cursor_number = 2;
+		}
+		else
+		{
+			cursor_number++;
+		}
 	}
+}
+
+	
 
 	/*************************
 	*タイトル画面：描画処理
@@ -134,4 +135,4 @@ void TitleScene_Update(void)
 
 	}
 		
-}
+

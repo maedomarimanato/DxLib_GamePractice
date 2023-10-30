@@ -14,8 +14,7 @@
 /*******************
 *プロトタイプ宣言
 ********************/
-
-int RankingScene_Initialize(void);
+int  RankingScene_Initialize(void);
 void RankingScene_Update(void);
 void RankingScene_Draw(void);
 

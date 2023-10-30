@@ -121,7 +121,7 @@ int GetButton(int button)
 {
 	int ret = FALSE;
 
-	if (button_state[button] == E_CLICK || button_state[button] == E_PREESS)
+	if (button_state[button] == E_CLICK || button_state[button] == E_PRESS)
 	{
 		ret = TRUE;
 	}
@@ -150,7 +150,7 @@ int GetButton(int button)
 ****************************************************/
 	
 int GetButtonDown(int button)
-[
+{
 	int ret = FALSE;
 
 if(button_state[button]== E_CLICK)

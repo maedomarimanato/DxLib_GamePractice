@@ -4,30 +4,28 @@
 
 /******************************
 *マクロ定義
-*******************************/
-
+*******************************/ 
 #define FIELD_HEIGHT (21)      //フィールドのマスの高さ
-#define FIELD_WIDTH       (12)　　　//フィールドのマス幅
-#define BLOCK_TROUT_SIZE (4)　　　　//ブロックのマスサイズ
-#define BLOCK_SIZE          (36)    //1ブロック当たりのサイズ
-#define BLOCK_TYPE_MAX      (7)　　　　　　//落ちてくるブロックの種類　
-#define BLOCK_NEXT_POS_X (700)　//次のブロックの座標(X座標）
-#define BLOCK_NEXT_POS_Y (500)　//次のブロックの座標(Y座標）
-#define BLOCK_STOCK_POS_X (500) //ストックされたブロックの座標(X座標)
-#define BLOCK_STOCK_POS_Y (350) //ストックされたブロックの座標(Y座標)
-#define DROP_BLOCK_INIT_X (4)        //落ちてくるブロックの初期X座標
-#define DROP_BLOCK_INIT_Y (-1)　 //落ちてくるブロックの初期Y座標
-#define DROP_SPEED             (60)   //落下時間
-#define TURN_CROCKWICE          (0)　　　　//時計周りに回転させる
-#define TURN_ANTICROKWICE (1)　　　　//反時計周りに回転させる
+#define FIELD_WIDTH  (12) //フィールドのマス幅
+#define BLOCK_TROUT_SIZE (4)//ブロックのマスサイズ
+#define BLOCK_SIZE (36)    //1ブロック当たりのサイズ
+#define BLOCK_TYPE_MAX (7)//落ちてくるブロックの種類　
+#define BLOCK_NEXT_POS_X (700)//次のブロックの座標(X座標）
+#define BLOCK_NEXT_POS_Y (500)//次のブロックの座標(Y座標）
+#define BLOCK_STOCK_POS_X (500)//ストックされたブロックの座標(X座標)
+#define BLOCK_STOCK_POS_Y (350)//ストックされたブロックの座標(Y座標)
+#define DROP_BLOCK_INIT_X (4)//落ちてくるブロックの初期X座標
+#define DROP_BLOCK_INIT_Y (-1)//落ちてくるブロックの初期Y座標
+#define DROP_SPEED (60)//落下時間
+#define TURN_CROCKWICE (0)//時計周りに回転させる
+#define TURN_ANTICROKWICE (1)//反時計周りに回転させる
 
 /*****************************
 *型定義
 *****************************/
-
 enum BLOCK_STATE
 {
-	E_BLOCK_EMPTY,        //空ブロック
+	E_BLOCK_EMPTY,       //空ブロック
 	E_BLOCK_LIGHT_BLUE,//水色
 	E_BLOCK_YELLOW_GREEEN,//黄緑
 	E_BLOCK_YELLOW,//黄色
@@ -39,63 +37,61 @@ enum BLOCK_STATE
 	E_BLOCK_WALL,//壁
 	E_BLOCK_IMAGE_MAX,
 };
-
-/*******************************
+/********************************
 *変数定義
-********************************/
-
+*********************************/
 const int C_BLOCK_TABLE[BLOCK_TYPE_MAX][BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE]={
 	{
-		{0,0,0,0},
-		{0,1,1,0},
-		{0,1,1,0},
-		{0,0,0,0}
+{0,0,0,0},
+{0,1,1,0},
+{0,1,1,0},
+{0,0,0,0}
 },
 {
-
-		{0,0,0,0},
-		{0,0,0,0},
-		{2,2,2,2},
-		{0,0,0,0}
+{0,0,0,0},
+{0,0,0,0},
+{2,2,2,2},
+{0,0,0,0}
 },
 {
-		{0,0,0,0},
-		{3,0,0,0},
-		{3,3,3,0},
-		{0,0,0,0}
+{0,0,0,0},
+{3,0,0,0},
+{3,3,3,0},
+{0,0,0,0}
 },
 {
-		{0,0,0,0},
-		{0,0,0,4},
-		{0,4,4,4},
-		{0,0,0,0}
+{0,0,0,0},
+{0,0,0,4},
+{0,4,4,4},
+{0,0,0,0}
 },
 {
-	    {0,0,0,0},
-	    {0,5,5,0},
-	    {0,0,5,0},
-	    {0,0,0,0}
+{0,0,0,0},
+{0,5,5,0},
+{0,0,5,5},
+{0,0,0,0}
 },
 {
-	    {0,0,0,0},
-	    {0,6,6,0},
-	    {6,6,0,0},
-	    {0,0,0,0}
+{0,0,0,0},
+{0,6,6,0},
+{6,6,0,0},
+{0,0,0,0}
 },
 {
-	    {0,0,0,0},
-	    {0,7,0,0},
-	    {7,7,7,0},
-	    {0,0,0,0}
-	}
+{0,0,0,0},
+{0,7,0,0},
+{7,7,7,0},
+{0,0,0,0}
+}
 };
+
+
 
 /****************************
 *変数宣言
 *****************************/
-
 int BlockImage[E_BLOCK_IMAGE_MAX];//ブロック画像
-BLOCK_STATE FieId[FIELD_HEIGHT][FIELD_WIDTH];//フィールド配列
+BLOCK_STATE FieId[FIELD_HEIGHT][FIELD_HEIGHT];//フィールド配列
 BLOCK_STATE Next[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE]; //待機状態のブロック
 BLOCK_STATE Stock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE]; //ストックのブロック
 BLOCK_STATE DropBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE]; //落ちるブロック
@@ -136,14 +132,14 @@ int Block_Initialize(void)
 	ret = LoadDivGraph("images/block.png", E_BLOCK_IMAGE_MAX, 10, 1,BLOCK_SIZE, BLOCK_SIZE, BlockImage);
 
 	//SEの読み込み
-	soundEffect[0] = LoadSoundMen("sounds/SE3.mp3");
-	soundEffect[1] = LoadSoundMen("sounds/SE4.mp3");
-	soundEffect[2] = LoadSoundMen("sounds/SE5.wav");
+	SoundEffect[0] = LoadSoundMem("sounds/SE3.mp3");
+	SoundEffect[1] = LoadSoundMem("sounds/SE4.mp3");
+	SoundEffect[2] = LoadSoundMem("sounds/SE5.wav");
 
 	//音量の調整
-	ChangeVolumeSoundMen(150, SoundEffect[0]);
-	ChangeVolumeSoundMen(150, SoundEffect[1]);
-	ChangeVolumeSoundMen(130, SoundEffect[2]);
+	ChangeVolumeSoundMem(150, SoundEffect[0]);
+	ChangeVolumeSoundMem(150, SoundEffect[1]);
+	ChangeVolumeSoundMem(130, SoundEffect[2]);
 
 	//フィールドの生産
 	create_field();
@@ -159,7 +155,7 @@ int Block_Initialize(void)
 	//生産フラグの初期化
 	Generate_Flg = TRUE;
 	//消したラインの数の初期化
-	 DeIeteLine= 0;
+	 DeleteLine = 0;
 
 	//エラーチェック
 	for (i = 0; i < 3; i++)
@@ -191,18 +187,15 @@ void Block_Update(void)
 		//生産可能であれば
 		if (Generate_Flg == TRUE)
 		{
-			change_block(); //ストック交換処理
+			change_block();//ストック交換処理
 			//ブロックの回転を正位置にする
-
 		}
-
 	}
-
 	//ブロックの回転（反時計周り）
 	if ((GetButtonDown(XINPUT_BUTTON_A) == TRUE) ||
 		(GetButtonDown(XINPUT_BUTTON_Y) == TRUE))
 	{
-		turn_block(TURN_ANTICROCKWICE);
+        turn_block(TURN_ANTICROKWICE);
 	}
 	//ブロックの回転（時計回り）
 	if ((GetButtonDown(XINPUT_BUTTON_B) == TRUE) ||
@@ -244,13 +237,13 @@ void Block_Draw(void)
 	int i, j;   //ループカウンタ
 
 	//フィールドのブロックを描画
-	for (I = 0; I < FIELD_HEIGHT; I++)
+	for (i = 0; i < FIELD_HEIGHT; i++)
 	{
 		for (j = 0; j < FIELD_WIDTH; j++)
 		{
-			if (Field[i][j] != E_BLOCK_WALL)
+			if (FieId[i][j] != E_BLOCK_WALL)
 			{
-				DrawGraph(j * BLOCK_SIZE, i + BLOCK_SIZE, BlockImage[Field[i][j]]],
+				DrawGraph(j * BLOCK_SIZE, i + BLOCK_SIZE, BlockImage[FieId[i][j]],
 				TRUE);
 			}
 		}
@@ -274,7 +267,7 @@ void Block_Draw(void)
 	{
 		for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 		{
-			DrawGraph((DropBlock_X + j) * BLOCK_SIZE, (DraopBlock_Y + i) * BLOCK, SIZE,
+			DrawGraph((DropBlock_X + j) * BLOCK_SIZE, (DropBlock_Y + i) * BLOCK_SIZE,
 				BlockImage[DropBlock[i][j]], TRUE);
 		}
 	}
@@ -291,7 +284,7 @@ int Get_GenerateFlg(void)
 }
 
 /***************************
-*ブロック機能：ラインの数取得処理
+*ブロック機能：消したラインの数取得処理
 *引数：なし
 *戻り値：消したラインの数
 *****************************/
@@ -301,7 +294,7 @@ int Get_Line(void)
 }
 
 /*****************************
-*ブロック機能：フィールドの生産処理
+*ブロック機能：フィールド生産処理
 *引数：なし
 *戻り値：なし
 *******************************/
@@ -310,19 +303,19 @@ void create_field(void)
 {
 	int i, j;      //ループカウンタ
 
-	//フィールド生産
-	for (i - 0; i < FIELD_HEIGHZT; i++)
+	//フィールドの生産
+	for (i	= 0; i < FIELD_HEIGHT; i++)
 	{
 		for (j = 0; j < FIELD_WIDTH; j++)
 		{
 			//フィールド値の設定
 			if (j == 0 || j == FIELD_WIDTH - 1 || i == FIELD_HEIGHT - 1)
 			{
-				Field[i][j] = E_BLOCK_WALL; //壁状態にする
+				FieId[i][j] = E_BLOCK_WALL; //壁状態にする
 			}
 			else
 			{
-				Field[i][j] = E_BLOCK_EMPTY; //空状態のする
+				FieId[i][j] = E_BLOCK_EMPTY; //空状態のする
 			}
 		}
 	}
@@ -347,13 +340,13 @@ void create_block(void)
 	{
 		for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 		{
-			DraopBlock[i][j] = Next[i][j];
+			DropBlock[i][j] = Next[i][j];
 			Next[i][j] = (BLOCK_STATE)C_BLOCK_TABLE[block_type][i][j];
 		}
 	}
 
 	//出現位置の設定
-	DropBlock_X = Drop_BLOCK_INIT_X;
+	DropBlock_X = DROP_BLOCK_INIT_X;
 	DropBlock_Y = DROP_BLOCK_INIT_Y;
 
 	//生産できなかった時、ゲームオーバーに転移する
@@ -372,7 +365,7 @@ void create_block(void)
 void move_block(void)
 {
 	//左入力時
-	if (GetButtonDown(XINOUT_BUTTON_LEFT))
+	if (GetButtonDown(XINPUT_BUTTON_DPAD_LEFT))
 	{
 		if (check_overlap(DropBlock_X - 1, DropBlock_Y) == TRUE)
 		{
@@ -420,7 +413,7 @@ void change_block(void)
 	int i, j;  ///ループカウンタ
 
 	//ストック先が空かどうか確認
-	if (Stock_Flg = TRUE)
+	if (Stock_Flg == TRUE)
 	{
 		for (i = 0; i < BLOCK_TROUT_SIZE; i++)
 		{
@@ -457,7 +450,7 @@ void change_block(void)
 
 void turn_block(int clockwise)
 {
-	BLOCK_STATE temp[BLOCK_TROUT_SIZE] = { E_BLOCK_EMPTY }; //退避領域
+	BLOCK_STATE temp[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = {E_BLOCK_EMPTY}; //退避領域
 	int i, j;   //ループカウンタ
 
 	do
@@ -465,18 +458,18 @@ void turn_block(int clockwise)
 		if (clockwise == TURN_CROCKWICE)
 		{
 			//ブロックを一時保持する
-			for (i = ; < BLOCK_TROUT_SIZE; i++)
+			for (i = 0;i < BLOCK_TROUT_SIZE; i++)
 			{
 				for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 				{
-					temp[j][3 - i] = DropBlock[i][j];
+					temp[j][3-i] = DropBlock[i][j];
 				}
 			}
 		}
 		else
 		{
 			//ブロックを一時保持する
-			for (i - 0; i < BLOCK_TROUT_SIZE; i++)
+			for (i = 0; i < BLOCK_TROUT_SIZE; i++)
 			{
 				for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 				{
@@ -486,7 +479,7 @@ void turn_block(int clockwise)
 		}
 
 		//ブロック回転
-		for (i = ; i < BLOCK_TROUT_SIZE; i++)
+		for (i = 0; i < BLOCK_TROUT_SIZE; i++)
 		{
 			for (j = 0; j, BLOCK_TROUT_SIZE; j++)
 			{
@@ -495,11 +488,11 @@ void turn_block(int clockwise)
 		}
 
 		//壁側の補正処理
-		if (check_overIap(DropBlock_X, DropBlock_Y) && DropBlock_X >= E_BLOCK_WALL)
+		if (check_overlap(DropBlock_X, DropBlock_Y) && DropBlock_X >= E_BLOCK_WALL)
 		{
 			DropBlock_X--;
 		}
-		if (check_overIap(DropBlock_X, DropBlock_Y) && DropBlock_X <= E = BLOCK_EMPTY)
+		if (check_overlap(DropBlock_X, DropBlock_Y) && DropBlock_X<=E_BLOCK_EMPTY)
 		{
 			DropBlock_X++;
 		}
@@ -525,7 +518,7 @@ int check_overlap(int x, int y)
 		{
 			if (DropBlock[i][j] != E_BLOCK_EMPTY)
 			{
-				if (Field[i + y][j + x] != E_BLOCK_EMPTY)
+				if (FieId[i + y][j + x] != E_BLOCK_EMPTY)
 				{
 					return FALSE;
 				}
@@ -545,17 +538,17 @@ void lock_block(int x, int y)
 {
 	int i, j;  //ループカウンタ
 
-	for (i = ; i < BLOCK_TROUT_SIZE; i++)
+	for (i = 0; i < BLOCK_TROUT_SIZE; i++)
 	{
 		for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 		{
 			if (DropBlock[i][j] != E_BLOCK_EMPTY)
 			{
-				Field[y + i][x + j] = DropBlock[i][j];
+				FieId[y + i][x + j] = DropBlock[i][j];
 			}
 		}
 	}
-	PlaySoundMem(SoindEffecy[1], DX_PLAYTYPE_BACK, TRUE);
+	PlaySoundMem(SoundEffect[1], DX_PLAYTYPE_BACK, TRUE);
 }
 
 /*****************************
@@ -572,35 +565,31 @@ void check_line(void)
 	{
 
 		//行の途中が空いてるか？
-		if (Field[i][j] == E_BLOCK_EMPTY)
+		if (FieId[i][j] == E_BLOCK_EMPTY)
 		{
 			break;
 		}
 	}
 
-	//一列揃っていたら、カウントを増やし、１段下げる
-	if (Field[i][j] == E_BLOCK_EMPTY)
-	{
-		break;
-	}
-}
 
-//一列揃っていたら、カウントを増やし、一段下げる
-if (j >= FIELD_WIDTH)
-{
-	//カウンタを増加
-	DeleteLine++;
-
-	//一段下げる
-	for (k = i; k > 0; k--)
+	//一列揃っていたら、カウントを増やし、一段下げる
+	if (j >= FIELD_WIDTH)
 	{
-		for (j = i; j < FIELD_WIDTH; j++)
+		//カウンタを増加
+		DeleteLine++;
+
+		//一段下げる
+		for (k = i; k > 0; k--)
 		{
-			Field[k][j] = Field[k - 1][j];
+			for (j = i; j < FIELD_WIDTH; j++)
+			{
+				FieId[k][j] = FieId[k - 1][j];
+			}
 		}
+		PlaySoundMem(SoundEffect[0], DX_PLAYTYPE_BACK, TRUE);
 	}
-	PlaySoundMem(SOundEffect[0], DX_PLAYTYPE_BACK, TRUE);
 }
-}
-}
-}
+
+
+
+
