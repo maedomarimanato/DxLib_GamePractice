@@ -52,7 +52,7 @@ void EndScene_Update(void)
 *戻り値：なし
 ******************************/
 
-void Endscene_Draw(void)
+void EndScene_Draw(void)
 {
 	DrawString(10, 10, "エンド画面です", GetColor(255, 255, 255));
 }

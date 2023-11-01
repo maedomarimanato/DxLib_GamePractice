@@ -55,7 +55,7 @@ int GameMainScene_Initialize(void)
 *ˆø”F‚È‚µ
 *–ß‚è’lF‚È‚µ
 **********************/
-void GameMainScen_Update(void)
+void GameMainScene_Update(void)
 {
 	//BGM‚ÌÄ¶
 	PlaySoundMem(BackGround_sound, DX_PLAYTYPE_LOOP, FALSE);

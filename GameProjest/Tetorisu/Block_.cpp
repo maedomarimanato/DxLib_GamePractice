@@ -409,7 +409,7 @@ void move_block(void)
 
 void change_block(void)
 {
-	BLOCK_STATE temp[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = { E_BLOCK_EMPTY };  //退避領域
+	BLOCK_STATE temp[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = { E_BLOCK_EMPTY }; //退避領域
 	int i, j;  ///ループカウンタ
 
 	//ストック先が空かどうか確認
@@ -451,7 +451,7 @@ void change_block(void)
 void turn_block(int clockwise)
 {
 	BLOCK_STATE temp[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = {E_BLOCK_EMPTY}; //退避領域
-	int i, j;   //ループカウンタ
+	int i, j;//ループカウンタ
 
 	do
 	{
@@ -481,11 +481,12 @@ void turn_block(int clockwise)
 		//ブロック回転
 		for (i = 0; i < BLOCK_TROUT_SIZE; i++)
 		{
-			for (j = 0; j, BLOCK_TROUT_SIZE; j++)
+			for (j = 0; j<BLOCK_TROUT_SIZE; j++)
 			{
 				DropBlock[i][j] = temp[i][j];
 			}
 		}
+
 
 		//壁側の補正処理
 		if (check_overlap(DropBlock_X, DropBlock_Y) && DropBlock_X >= E_BLOCK_WALL)
@@ -512,7 +513,7 @@ int check_overlap(int x, int y)
 {
 	int i, j;   //ループカウンタ
 
-	for (i = 0; j < BLOCK_TROUT_SIZE; i++)
+    for (i = 0; i < BLOCK_TROUT_SIZE; i++)
 	{
 		for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 		{
@@ -534,7 +535,7 @@ int check_overlap(int x, int y)
 *戻り値：なし
 **************************/
 
-void lock_block(int x, int y)
+void lock_block(int x,int y)
 {
 	int i, j;  //ループカウンタ
 
@@ -548,7 +549,7 @@ void lock_block(int x, int y)
 			}
 		}
 	}
-	PlaySoundMem(SoundEffect[1], DX_PLAYTYPE_BACK, TRUE);
+	PlaySoundMem(SoundEffect[1], DX_PLAYTYPE_BACK,TRUE);
 }
 
 /*****************************
@@ -559,36 +560,39 @@ void lock_block(int x, int y)
 
 void check_line(void)
 {
-	int i, j, k;   //ループカウンタ
+	int i, j, k; //ループカウンタ
 
 	for (i = 0; i < FIELD_HEIGHT - 1; i++)
 	{
-
-		//行の途中が空いてるか？
-		if (FieId[i][j] == E_BLOCK_EMPTY)
+		for (j = 1; j < FIELD_HEIGHT; j++)
 		{
-			break;
-		}
-	}
-
-
-	//一列揃っていたら、カウントを増やし、一段下げる
-	if (j >= FIELD_WIDTH)
-	{
-		//カウンタを増加
-		DeleteLine++;
-
-		//一段下げる
-		for (k = i; k > 0; k--)
-		{
-			for (j = i; j < FIELD_WIDTH; j++)
+			//行の途中が空いてるか？
+			if (FieId[i][j] == E_BLOCK_EMPTY)
 			{
-				FieId[k][j] = FieId[k - 1][j];
+				break;
 			}
 		}
-		PlaySoundMem(SoundEffect[0], DX_PLAYTYPE_BACK, TRUE);
+
+
+		//一列揃っていたら、カウントを増やし、一段下げる
+		if (j >= FIELD_WIDTH)
+		{
+			//カウンタを増加
+			DeleteLine++;
+
+			//一段下げる
+			for (k = i; k > 0; k--)
+			{
+				for (j = 1; j < FIELD_WIDTH; j++)
+				{
+					FieId[k][j] = FieId[k - 1][j];
+				}
+			}
+			PlaySoundMem(SoundEffect[0], DX_PLAYTYPE_BACK, TRUE);
+		}
 	}
 }
+
 
 
 

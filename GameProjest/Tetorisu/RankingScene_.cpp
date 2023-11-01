@@ -7,7 +7,7 @@
 *マクロ定義
 ***********************/
 
-#define RANKING_FILE ("dat/rankingdate.csv")
+#define RANKING_FILE ("dat/rankingdata.csv")
 #define RANKING_MAX (10)
 #define RANKING_NAME_LEN (11)
 
@@ -18,7 +18,7 @@
 typedef struct
 {
 	int rank;//ランク
-	char name[RANKING_NAME_LEN]; //名前
+	char name[RANKING_NAME_LEN];//名前
 	int score;
 }T_RANKING;
 
@@ -26,13 +26,13 @@ typedef struct
 {
 	int x;
 	int y;
-}T_RANKING;
+}T_CURSOR;
 
 /************************
 *グローバル変数宣言
 *************************/
 
-T_RANKING Ranking_Date[RANKING_MAX]; //ランキングデータ
+T_RANKING Ranking_Data[RANKING_MAX]; //ランキングデータ
 T_RANKING New_Score;//新しいスコアデータ
 int DispMode;//表示モード
 
@@ -42,7 +42,6 @@ int name_num;
 /***********************
 *プロトタイプ宣言
 ************************/
-
 void file_read(void);//ファイル読み込み
 void file_write(void);//ファイル書き込み
 void ranking_sort(void);//ランキングソート処理
@@ -55,7 +54,7 @@ void ranking_input_name_draw(void); //名前入力描画処理
 *戻り値：エラー情報（-1：異常値,-1以外：正常終了）
 *************************/
 
-int rankingScene_Initialize(void)
+int RankingScene_Initialize(void)
 {
 	int ret = 0;
 
@@ -86,9 +85,9 @@ void RankingScene_Update(void)
 {
 	switch (DispMode)
 	{
-		case RANKING_INPUT_MODE;
-			ranking_input_name();
-			break;
+	case RANKING_INPUT_MODE:
+			 ranking_input_name();
+			 break;
 		case RANKING_DISP_MODE:
 		default:
 			if (GetButtonDown(XINPUT_BUTTON_B))
@@ -100,7 +99,7 @@ void RankingScene_Update(void)
 }
 
 /****************************
-*ランキング画面：更新処理
+*ランキング画面：描画処理
 *引数：なし
 *戻り値：なし
 *****************************/
@@ -118,31 +117,28 @@ void RankingScene_Draw(void)
 	default:
 		for (i = 0; i < RANKING_MAX; i++)
 		{
-			DrawFormatString(20, 10 + (i * 25), GetColor(255, 255, 255), "%2d,
-				"%10s", "%10d", Ranking_Date[i].rank, Ranking_Date[i].name, Ranking_Date[i].score);
+			DrawFormatString(20,10 + (i * 25), GetColor(255, 255, 255), "%2d,%10s,%10d",
+				Ranking_Data[i].rank, Ranking_Data[i].name, Ranking_Data[i].score);
 		}
 		break;
 	}
-
+}
 	/**********************
 	*ランキング画面：画面変更処理
 	*引数：なし
 	*戻り値：なし
 	************************/
 
-	void Set_RankingMode(int mode)
+	void  Set_RankingMode(int mode)
 	{
 		DispMode = mode;
 	}
-	
-	
 
 	/****************************
 	*ランキング画面：スコア取得処理
 	*引数：なし
 	*戻り値：なし
 	******************************/
-
 	void Set_RankingScore(int score)
 	{
 		New_Score.score = score;
@@ -159,26 +155,26 @@ void RankingScene_Draw(void)
 		FILE* fp = NULL;
 		int i;
 
-		outputDebugString("ファイル読み込みます");
-		fopen_s(&fp, RANKING_FILE, "r")
+		OutputDebugString("ファイル読み込みます");
+		fopen_s(&fp, RANKING_FILE, "r");
 
-			if (fp = NULL)
+		if (fp == NULL)
+		{
+			OutputDebugString("ファイルが読み込めません");
+			OutputDebugString("ファイルを生成します");
+			file_write();
+		}
+		else
+		{
+			for (i = 0; i < RANKING_MAX; i++)
 			{
-				outputDebugString("ファイルが読み込めません");
-				outputDebugSring("ファイルを生成します");
-				file_write();
-			}
-			else
-			{
-				for (i = 0; i < RANKING_MAX; i++)
-				{
-					fscanf_s(fp, "%2d,%[^,],%10d＼n", &Ranking_Date[i].rank,
-						Ranking_Date[i].name, RANKING_NAME_LEN, &Ranking_Date[i].score);
-				}
-
-				fclose(fp);
+				fscanf_s(fp, "%2d,%[^,],%10d/n",&Ranking_Data[i].rank,
+					Ranking_Data[i].name, RANKING_NAME_LEN, &Ranking_Data[i].score);
 			}
 
+			fclose(fp);
+		}
+	}
 
 	/**************************************
 	*ランキング画面：ファイル書き込み処理
@@ -191,24 +187,24 @@ void RankingScene_Draw(void)
 		FILE* fp = NULL;
 		int i;
 
-		OutputDebugString("フアイルを書き込みます");
+		OutputDebugString("ファイルを書き込みます");
 		fopen_s(&fp, RANKING_FILE, "w");
 
-		if(fp==NULL)
+		if (fp == NULL)
 		{
-		OutputDebugString("ファイルを書き込みません");
-	}
-	else
-	{
-		for (i = 0; i < RANKING_MAX; i++)
-		{
-			fprintf(fp, "%2d[^,],%10d＼n", Ranking_Date[i].rank,
-				Ranking_Date[i].name, Ranking_date[i].score);
+			OutputDebugString("ファイルを書き込みません");
 		}
-
-		fclose(fp);
+		else
+		{
+			for (i = 0; i < RANKING_MAX; i++)
+			{
+				fprintf(fp,"%2d,%[^,],%10d/n", Ranking_Data[i].rank,
+					Ranking_Data[i].name, Ranking_Data[i].score);
 			}
-}
+
+			fclose(fp);
+		}
+	}
 
 /**********************
 *ランキング画面：ランキングソート処理
@@ -222,18 +218,18 @@ void ranking_sort(void)
 	T_RANKING tmp; //退避領域
 
 	//一番下のスコアを更新する
-	Ranking_Date[RANKING_MAX - 1] = New_Score;
+	Ranking_Data[RANKING_MAX - 1] = New_Score;
 
 	//データのソートを行う
 	for (i = 0; i < RANKING_MAX; i++)
 	{
 		for (j = i + 1; j < RANKING_MAX; j++)
 		{
-			if (Ranking_Date[i].score< Ranking_Date[j].score)
+			if (Ranking_Data[i].score< Ranking_Data[j].score)
 			{
-				tmp = Ranking_Date[i];
-				Ranking_Date[i] = Ranking_Date[j];
-				Ranking_Date[j] = tmp;
+				tmp = Ranking_Data[i];
+				Ranking_Data[i] = Ranking_Data[j];
+				Ranking_Data[j] = tmp;
 			}
 		}
 	}
@@ -241,7 +237,7 @@ void ranking_sort(void)
 	//順位を上から降っていく
 	for (i = 0; i < RANKING_MAX; i++)
 	{
-		Ranking_Date[i].rank = i + 1;
+		Ranking_Data[i].rank = i + 1;
 	}
 
 	//ファイルに書き込みを行う
@@ -298,10 +294,10 @@ void ranking_input_name(void)
 		}
 		else if (Cursor.y < 4)
 		{
-			c = 'A' + Cursor.x((Cursor.y - 2) * 13);
+			c = 'A'+Cursor.x+((Cursor.y - 2) * 13);
 			New_Score.name[name_num++] = c;
 		}
-		else
+		else 
 		{
 			if (Cursor.x < 10)
 			{
@@ -311,7 +307,7 @@ void ranking_input_name(void)
 			else if (Cursor.x == 10)
 			{
 				name_num--;
-				New_Score.name[name_num] = '＼0';
+				New_Score.name[name_num]='/0';
 			}
 			else
 			{
@@ -334,15 +330,15 @@ void ranking_input_name_draw(void)
 
 	SetFontSize(40);
 	DrawFormatString(300, 150, GetColor(255, 255, 255), "名前を入力してください");
-	DrawFormatString(300, 150, GetColor(255, 255, 255), "名前を入力してください");
+	
 
 	//選択文字を描画
 	for (i = 0; i < 26; i++)
 	{
 		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 330, GetColor(255, 255,
-			255), "%-3c", 'a' - i);
+			255), "%-3c", 'a' + i);
 		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 430, GetColor(255, 255,
-			255), "%-3c", 'A' - i);
+			255), "%-3c", 'A' + i);
 	}
 	for (i = 0; i < 10; i++)
 	{
@@ -355,6 +351,6 @@ void ranking_input_name_draw(void)
 
 	//選択している文字をファーカスしている
 	DrawBox((Cursor.x * 50) + 290, (Cursor.y * 50) + 330,
-		(Cursor.x * 50) + 290, (Cursor.y * 50) + 370,
+		(Cursor.x * 50) + 330, (Cursor.y * 50) + 370,
 		GetColor(255, 255, 255), FALSE);
 }

@@ -1,7 +1,7 @@
 #include "TitleScene.h"
-#include "DxLib.h"
 #include "InputControl.h"
 #include "SceneManager.h"
+#include "DxLib.h"
 
 /******************
 *マクロ定義
@@ -12,7 +12,7 @@
 *******************/
 
 /******************
-*変数宣言
+*グローバル変数宣言
 *******************/
 
 int TitleImage;

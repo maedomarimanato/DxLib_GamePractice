@@ -32,7 +32,7 @@ int sounds[E_SOUND_MAX];
 *戻り値：エラー情報（-1：異常値、－１以外：正常終了）
 *******************************************************/
 
-int TitleScene_Initialoize(void)
+int TitleScene_Initialize(void)
 {
 	int ret = 0;
 
