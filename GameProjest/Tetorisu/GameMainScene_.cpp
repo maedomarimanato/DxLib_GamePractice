@@ -15,10 +15,10 @@
 *グローバル変数宣言
 ******************/
 
-int BackGround_image;   //背景画像イメージ
+int BackGround_image; //背景画像イメージ
 int BackGround_sound;//BGM
 int GameOver_sound; //ゲームオーバーSE
-int Score;  //スコア
+int Score; //スコア
 /******************
 *プロトタイプ宣言
 *******************/
@@ -34,7 +34,7 @@ int GameMainScene_Initialize(void)
 	int ret = 0;
 
 	ret = Block_Initialize();
-	BackGround_image = LoadGraph("images / stage.pug");
+	BackGround_image = LoadGraph("images/stage.png");
 	BackGround_sound = LoadSoundMem("sounds/BGM017.ogg");
 	GameOver_sound = LoadSoundMem("sounds/GameOver.mp3");
 

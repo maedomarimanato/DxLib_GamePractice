@@ -40,82 +40,80 @@ enum BLOCK_STATE
 /********************************
 *変数定義
 *********************************/
-const int C_BLOCK_TABLE[BLOCK_TYPE_MAX][BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE]={
+const int C_BLOCK_TABLE[BLOCK_TYPE_MAX][BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = {
 	{
-{0,0,0,0},
-{0,1,1,0},
-{0,1,1,0},
-{0,0,0,0}
-},
-{
-{0,0,0,0},
-{0,0,0,0},
-{2,2,2,2},
-{0,0,0,0}
-},
-{
-{0,0,0,0},
-{3,0,0,0},
-{3,3,3,0},
-{0,0,0,0}
-},
-{
-{0,0,0,0},
-{0,0,0,4},
-{0,4,4,4},
-{0,0,0,0}
-},
-{
-{0,0,0,0},
-{0,5,5,0},
-{0,0,5,5},
-{0,0,0,0}
-},
-{
-{0,0,0,0},
-{0,6,6,0},
-{6,6,0,0},
-{0,0,0,0}
-},
-{
-{0,0,0,0},
-{0,7,0,0},
-{7,7,7,0},
-{0,0,0,0}
-}
+		  {0,0,0,0},
+		  {0,1,1,0},
+		  {0,1,1,0},
+		  {0,0,0,0}
+	},
+	{
+		  {0,0,0,0},
+		  {0,0,0,0},
+		  {2,2,2,2},
+		  {0,0,0,0}
+	},
+	{
+		  {0,0,0,0},
+		  {3,0,0,0},
+		  {3,3,3,0},
+		  {0,0,0,0}
+	},
+	{
+		  {0,0,0,0},
+		  {0,0,0,4},
+		  {0,4,4,4},
+		  {0,0,0,0}
+	},
+	{
+		  {0,0,0,0},
+		  {0,5,5,0},
+		  {0,0,5,5},
+		  {0,0,0,0}
+	},
+	{
+		  {0,0,0,0},
+		  {0,6,6,0},
+		  {6,6,0,0},
+		  {0,0,0,0}
+	},
+	{
+		  {0,0,0,0},
+		  {0,7,0,0},
+		  {7,7,7,0},
+		  {0,0,0,0}
+		  }
 };
-
-
 
 /****************************
 *変数宣言
 *****************************/
 int BlockImage[E_BLOCK_IMAGE_MAX];//ブロック画像
-BLOCK_STATE FieId[FIELD_HEIGHT][FIELD_HEIGHT];//フィールド配列
+BLOCK_STATE FieId[FIELD_HEIGHT][FIELD_WIDTH];//フィールド配列
 BLOCK_STATE Next[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE]; //待機状態のブロック
 BLOCK_STATE Stock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE]; //ストックのブロック
 BLOCK_STATE DropBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE]; //落ちるブロック
 int DropBlock_X; //落ちるブロックのX座標
 int DropBlock_Y;//落ちるブロックのY座標
 
-int WaitTime;   //待機時間
-int Stock_Flg;  //ストックフラグ
+int WaitTime; //待機時間
+int Stock_Flg; //ストックフラグ
 int Generate_Flg; //生産フラグ
-int DeleteLine;  //消したラインの数
+int DeleteLine; //消したラインの数
 int SoundEffect[3]; //SE
 
 /******************************
 *プロトタイプ宣言
 *******************************/
 
-void create_field(void);  //フィールドの生産処理
+void create_field(void);//フィールドの生産処理
 void create_block(void);//ブロックの生産処理
 void move_block(void);//ブロックの移動処理
 void change_block(void);//ストック交換処理
 void turn_block(int clockwise);//ブロック回転処理
 int check_overlap(int x, int y);//範囲外チェック処理
 void lock_block(int x, int y);//着地したブロックを固定済みに変更する処理
-void check_line(void);    //ブロックの横一列確認処理
+void check_line(void);//ブロックの横一列確認処理
 
 /******************************
 *ブロック機能：初期化処理
@@ -193,7 +191,7 @@ void Block_Update(void)
 	}
 	//ブロックの回転（反時計周り）
 	if ((GetButtonDown(XINPUT_BUTTON_A) == TRUE) ||
-		(GetButtonDown(XINPUT_BUTTON_Y) == TRUE))
+		 (GetButtonDown(XINPUT_BUTTON_Y) == TRUE))
 	{
         turn_block(TURN_ANTICROKWICE);
 	}
@@ -243,7 +241,7 @@ void Block_Draw(void)
 		{
 			if (FieId[i][j] != E_BLOCK_WALL)
 			{
-				DrawGraph(j * BLOCK_SIZE, i + BLOCK_SIZE, BlockImage[FieId[i][j]],
+				DrawGraph(j * BLOCK_SIZE, i * BLOCK_SIZE, BlockImage[FieId[i][j]],
 				TRUE);
 			}
 		}
@@ -301,7 +299,7 @@ int Get_Line(void)
 
 void create_field(void)
 {
-	int i, j;      //ループカウンタ
+	int i, j; //ループカウンタ
 
 	//フィールドの生産
 	for (i	= 0; i < FIELD_HEIGHT; i++)
@@ -322,14 +320,14 @@ void create_field(void)
 }
 
 /*************************
-*ブロック機能：生産処理
+*ブロック機能：ブロック生産処理
 *引数：なし
 *戻り値：なし
 **************************/
 
 void create_block(void)
 {
-	int i, j;  //ループカウンタ
+	int i, j; //ループカウンタ
 	int block_type; //次に出現させるブロックタイプ
 
 	//次に出現させるブロックの決定する
@@ -564,7 +562,7 @@ void check_line(void)
 
 	for (i = 0; i < FIELD_HEIGHT - 1; i++)
 	{
-		for (j = 1; j < FIELD_HEIGHT; j++)
+		for (j = 1; j < FIELD_WIDTH; j++)
 		{
 			//行の途中が空いてるか？
 			if (FieId[i][j] == E_BLOCK_EMPTY)

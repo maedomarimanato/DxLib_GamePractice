@@ -5,7 +5,7 @@
 *マクロ定義
 ***********************/
 
-#define XINPUT_BUTTON_MAX (16)
+#define XINPUT_BUTTON_MAX (16)  //コントローラーのボタン数
 
 /**********************
 *型定義
@@ -13,7 +13,7 @@
 
 enum KEY_STATE
 {
-	E_NONE,  //未入力
+	E_NONE, //未入力
 	E_CLICK,//押した瞬間
 	E_PRESS,//押し続けてる
 	E_RELEASED,//離した
@@ -59,7 +59,7 @@ void InputControl_Update(void)
 	XINPUT_STATE input_controller; //コントローラー入力情報
 
 	//コントローラーの入力情報を取得
-	GetJoypadXInputState(DX_INPUT_PAD1, &input_controller);
+	GetJoypadXInputState(DX_INPUT_PAD1,&input_controller);
 
 	//入力状態の更新
 	for (i = 0; i < XINPUT_BUTTON_MAX; i++)
@@ -75,6 +75,9 @@ void InputControl_Update(void)
 			case E_CLICK:
 			case E_PRESS:
 				button_state[i] = E_PRESS;
+				break;
+			default:
+				button_state[i] = E_NONE;
 				break;
 			}
 		}
@@ -100,16 +103,17 @@ void InputControl_Update(void)
 
 /***************************************************
 *入力制御機能：押されているか判定処理
-*引数：XINPUTのボタン(0) //デジタル方向ボタン上
-*XINPUT_BUTTON_DOAD_UP(1)　//デジタル方向ボタン下
-*XINPUT_BUTTON_DOAD_DOWN(2)//デジタル方向ボタン左
-*XINPUT_BUTTON_DOAD_LEFT(3)//デジタル方向ボタン右
-*XINPUT_BUTTON_DOAD_RIGHT(4)//STATEボタン
-*XINPUT_BUTTON_STATE(5)//BACKボタン
-*XINPUT_BUTTON_BACK(6)//左スティック押し込み
-*XINPUT_BUTTON_LEFT_THUMB(7)//右スティック押し込み
-*XINPUT_BUTTON_RIGHT_THUMB(8)//LBボタン
-*XINPUT_BUTTON_LEFT_SHOULDER(9)//RBボタン
+*引数：XINPUTのボタン情報 
+*XINPUT_BUTTON_DOAD_UP(0)　//デジタル方向ボタン上
+*XINPUT_BUTTON_DOAD_DOWN(1)//デジタル方向ボタン下
+*XINPUT_BUTTON_DOAD_LEFT(2)//デジタル方向ボタン左
+*XINPUT_BUTTON_DOAD_RIGHT(3)//デジタル方向ボタン右
+*XINPUT_BUTTON_STATE(4)//STARTボタン
+*XINPUT_BUTTON_BACK(5)//BACKボタン
+*XINPUT_BUTTON_LEFT_THUMB(6)//左スティック押し込み
+*XINPUT_BUTTON_RIGHT_THUMB(7)//右スティック押し込み
+*XINPUT_BUTTON_LEFT_SHOULDER(8)//LBボタン
+*XINPUT_BUTTON_RIGHT_SHOULDER (9)//RBボタン
 *XINPUT_BUTTON_A(12) //Aボタン
 *XINPUT_BUTTON_B(13)//Bボタン
 *XINPUT_BUTTON_X(14)//Xボタン
@@ -142,10 +146,10 @@ int GetButton(int button)
 *XINPUT_BUTTON_RIGHT_THUMB(7)//右スティック押し込み
 *XINPUT_BUTTON_LEFT_SHOULDER　（8）
 *XINPUT_BUTTON_RIGHT_SHOULDER (9)
-*XINPUT_BUTTON_A
-*XINPUT_BUTTON_B
-*XINPUT_BUTTON_X
-*XINPUT_BUTTON_Y
+*XINPUT_BUTTON_A(12)
+*XINPUT_BUTTON_B(13)
+*XINPUT_BUTTON_X(14)
+*XINPUT_BUTTON_Y(15)
 *戻り値：TRUE（押した瞬間）,FALSE（押した瞬間ではない）
 ****************************************************/
 	
@@ -163,20 +167,20 @@ return ret;
 /******************************************************
 *入力制御機能：離したか判定処理
 *引数：XINPUTのボタン情報
-*XINPUT_BUTTON_DPAD_UP
-*XINPUT_BUTTON_DPAD_DOWN
-*XINPUT_BUTTON_DPAD_LEFT
-*XINPUT_BUTTON_DPAD_RIGHT
-*XINPUT_BUTTON_STATE
-*XINPUT_BUTTON_BACK
-*XINPUT_BUTTON_LEFT_THUMB
-*XINPUT_BUTTON_RIGHT_THUMB
-*XINPUT_BUTTON_LEFT_SHOULDER
-*XINPUT_BUTTON_SHOULDER
-*XINPUT_BUTTON_A
-*XINPUT_BUTTON_B
-*XINPUT_BUTTON_X
-*XINPUT_BUTTON_Y
+*XINPUT_BUTTON_DPAD_UP (0)//デジタル方向上ボタン
+*XINPUT_BUTTON_DPAD_DOWN（1）//デジタルボタン方向下
+*XINPUT_BUTTON_DPAD_LEFT（2）//デジタル方向ボタン左
+*XINPUT_BUTTON_DPAD_RIGHT（3）//デジタル方向ボタン右
+*XINPUT_BUTTON_STATE（4）//STARTボタン
+*XINPUT_BUTTON_BACK（5）//BACKボタン
+*XINPUT_BUTTON_LEFT_THUMB（6）//左スティック押し込み
+*XINPUT_BUTTON_RIGHT_THUMB（7）//右スティック押し込み
+*XINPUT_BUTTON_LEFT_SHOULDER（8）//LBボタン
+*XINPUT_BUTTON_SHOULDER（9）//RBボタン
+*XINPUT_BUTTON_A（12）//Aボタン
+*XINPUT_BUTTON_B（13）//Bボタン
+*XINPUT_BUTTON_X（14）//Xボタン
+*XINPUT_BUTTON_Y（15）//Yボタン
 *戻り値：TRUE（押した瞬間),FALSE(押した瞬間ではない）
 *****************************************************/
 
