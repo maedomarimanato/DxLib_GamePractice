@@ -168,7 +168,7 @@ void RankingScene_Draw(void)
 		{
 			for (i = 0; i < RANKING_MAX; i++)
 			{
-				fscanf_s(fp, "%2d,%[^,],%10d/n",&Ranking_Data[i].rank,
+				fscanf_s(fp, "%2d,%[^,],%10d＼n",&Ranking_Data[i].rank,
 					Ranking_Data[i].name, RANKING_NAME_LEN, &Ranking_Data[i].score);
 			}
 
@@ -307,7 +307,7 @@ void ranking_input_name(void)
 			else if (Cursor.x == 10)
 			{
 				name_num--;
-				New_Score.name[name_num]='/0';
+				New_Score.name[name_num]='＼0';
 			}
 			else
 			{
@@ -347,7 +347,7 @@ void ranking_input_name_draw(void)
 	}
 	DrawFormatString(300, 220, GetColor(255, 255, 255), ">%s", New_Score.name);
 
-	SetFontSize(20);
+	SetFontSize(20);                                                                                                                                                                                                                                                         
 
 	//選択している文字をファーカスしている
 	DrawBox((Cursor.x * 50) + 290, (Cursor.y * 50) + 330,
